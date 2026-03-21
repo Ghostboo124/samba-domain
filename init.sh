@@ -124,9 +124,7 @@ appSetup () {
 		echo "command=/usr/sbin/openvpn --config /docker.ovpn" >> /etc/supervisor/conf.d/supervisord.conf
 	fi
 
-	echo "server 127.127.1.0" > /etc/ntpsec/ntp.conf
-	echo "fudge  127.127.1.0 stratum 10" >> /etc/ntpsec/ntp.conf
-	echo "server 0.pool.ntp.org     iburst prefer" >> /etc/ntpsec/ntp.conf
+	echo "server 0.pool.ntp.org     iburst prefer" > /etc/ntpsec/ntp.conf
 	echo "server 1.pool.ntp.org     iburst prefer" >> /etc/ntpsec/ntp.conf
 	echo "server 2.pool.ntp.org     iburst prefer" >> /etc/ntpsec/ntp.conf
 	echo "driftfile       /var/lib/ntp/ntp.drift" >> /etc/ntpsec/ntp.conf
