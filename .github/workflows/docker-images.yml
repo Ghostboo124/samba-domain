@@ -1,0 +1,44 @@
+name: Build Docker Images
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-images:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image_name: samba-domain-amd64
+            dockerfile: Dockerfile
+            platform: linux/amd64
+          - image_name: samba-domain-armv7
+            dockerfile: arm.Dockerfile
+            platform: linux/arm/v7
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./${{ matrix.dockerfile }}
+          platforms: ${{ matrix.platform }}
+          tags: local/${{ matrix.image_name }}:${{ github.sha }}
+          push: false
