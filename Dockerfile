@@ -23,7 +23,7 @@ RUN \
         vim \
         curl \
         dnsutils \
-        ntp &&\
+        ntpsec &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
     rm -rf /var/lib/{apt,dpkg,cache,log}/ &&\

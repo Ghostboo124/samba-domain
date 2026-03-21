@@ -20,7 +20,10 @@ RUN \
         openvpn \
         inetutils-ping \
         ldb-tools \
-        ntp &&\
+        vim \
+        curl \
+        dnsutils \
+        ntpsec &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
     rm -rf /var/lib/{apt,dpkg,cache,log}/ &&\
@@ -31,4 +34,4 @@ VOLUME [ "/var/lib/samba", "/etc/samba/external" ]
 ADD init.sh /init.sh
 ADD domain.sh /domain.sh
 RUN chmod 755 /init.sh /domain.sh
-CMD /init.sh
+CMD /init.sh setup

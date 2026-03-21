@@ -22,6 +22,18 @@ appSetup () {
 	UDOMAIN=${DOMAIN^^}
 	if [[ -n "${WORKGROUP}" ]]; then
 		URDOMAIN=${WORKGROUP^^}
+		if [[ ${#URDOMAIN} -gt 15 ]]; then
+			echo "ERROR: WORKGROUP must be up to 15 characters (got '${WORKGROUP}')."
+			exit 1
+		fi
+		if [[ "${URDOMAIN}" == *.* ]]; then
+			echo "ERROR: WORKGROUP must not contain dots (got '${WORKGROUP}')."
+			exit 1
+		fi
+		if [[ ! "${URDOMAIN}" =~ ^[A-Z0-9]([A-Z0-9-]*[A-Z0-9])?$ ]]; then
+			echo "ERROR: WORKGROUP may contain only letters, numbers, and hyphens, and cannot start or end with a hyphen."
+			exit 1
+		fi
 	else
 		URDOMAIN=${UDOMAIN%%.*}
 	fi
@@ -100,7 +112,7 @@ appSetup () {
 	echo "nodaemon=true" >> /etc/supervisor/conf.d/supervisord.conf
 	echo "" >> /etc/supervisor/conf.d/supervisord.conf
 	echo "[program:ntpd]" >> /etc/supervisor/conf.d/supervisord.conf
-	echo "command=/usr/sbin/ntpd -c /etc/ntpd.conf -n" >> /etc/supervisor/conf.d/supervisord.conf
+	echo "command=/usr/sbin/ntpd -c /etc/ntpsec/ntp.conf -n" >> /etc/supervisor/conf.d/supervisord.conf
 	echo "[program:samba]" >> /etc/supervisor/conf.d/supervisord.conf
 	echo "command=/usr/sbin/samba -i" >> /etc/supervisor/conf.d/supervisord.conf
 	if [[ ${MULTISITE,,} == "true" ]]; then
@@ -112,20 +124,20 @@ appSetup () {
 		echo "command=/usr/sbin/openvpn --config /docker.ovpn" >> /etc/supervisor/conf.d/supervisord.conf
 	fi
 
-	echo "server 127.127.1.0" > /etc/ntpd.conf
-	echo "fudge  127.127.1.0 stratum 10" >> /etc/ntpd.conf
-	echo "server 0.pool.ntp.org     iburst prefer" >> /etc/ntpd.conf
-	echo "server 1.pool.ntp.org     iburst prefer" >> /etc/ntpd.conf
-	echo "server 2.pool.ntp.org     iburst prefer" >> /etc/ntpd.conf
-	echo "driftfile       /var/lib/ntp/ntp.drift" >> /etc/ntpd.conf
-	echo "logfile         /var/log/ntp" >> /etc/ntpd.conf
-	echo "ntpsigndsocket  /usr/local/samba/var/lib/ntp_signd/" >> /etc/ntpd.conf
-	echo "restrict default kod nomodify notrap nopeer mssntp" >> /etc/ntpd.conf
-	echo "restrict 127.0.0.1" >> /etc/ntpd.conf
-	echo "restrict 0.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpd.conf
-	echo "restrict 1.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpd.conf
-	echo "restrict 2.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpd.conf
-	echo "tinker panic 0" >> /etc/ntpd.conf
+	echo "server 127.127.1.0" > /etc/ntpsec/ntp.conf
+	echo "fudge  127.127.1.0 stratum 10" >> /etc/ntpsec/ntp.conf
+	echo "server 0.pool.ntp.org     iburst prefer" >> /etc/ntpsec/ntp.conf
+	echo "server 1.pool.ntp.org     iburst prefer" >> /etc/ntpsec/ntp.conf
+	echo "server 2.pool.ntp.org     iburst prefer" >> /etc/ntpsec/ntp.conf
+	echo "driftfile       /var/lib/ntp/ntp.drift" >> /etc/ntpsec/ntp.conf
+	echo "logfile         /var/log/ntp" >> /etc/ntpsec/ntp.conf
+	echo "ntpsigndsocket  /usr/local/samba/var/lib/ntp_signd/" >> /etc/ntpsec/ntp.conf
+	echo "restrict default kod nomodify notrap nopeer mssntp" >> /etc/ntpsec/ntp.conf
+	echo "restrict 127.0.0.1" >> /etc/ntpsec/ntp.conf
+	echo "restrict 0.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpsec/ntp.conf
+	echo "restrict 1.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpsec/ntp.conf
+	echo "restrict 2.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpsec/ntp.conf
+	echo "tinker panic 0" >> /etc/ntpsec/ntp.conf
 
 	appStart ${FIRSTRUN}
 }
