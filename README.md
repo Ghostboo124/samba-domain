@@ -5,3 +5,8 @@ A well documented, tried and tested Samba Active Directory Domain Controller tha
 ## Documentation
 
 Latest documentation available at: [https://nowsci.com/samba-domain/](https://nowsci.com/samba-domain/)
+
+## Environment variables
+
+- `DOMAIN` (default: `SAMDOM.LOCAL`) sets the AD domain/realm.
+- `WORKGROUP` (optional) overrides the short NetBIOS/workgroup name used for provisioning. When not set, it defaults to the first label of `DOMAIN`.

@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -23,7 +23,7 @@ RUN \
         vim \
         curl \
         dnsutils \
-        ntp &&\
+        ntpsec &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
     rm -rf /var/lib/{apt,dpkg,cache,log}/ &&\

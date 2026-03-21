@@ -1,4 +1,4 @@
-FROM arm32v7/ubuntu:22.04
+FROM arm32v7/ubuntu:24.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -19,7 +19,11 @@ RUN \
         supervisor \
         openvpn \
         inetutils-ping \
-        ntp &&\
+        ldb-tools \
+        vim \
+        curl \
+        dnsutils \
+        ntpsec &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
     rm -rf /var/lib/{apt,dpkg,cache,log}/ &&\
