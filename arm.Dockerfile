@@ -1,6 +1,7 @@
-FROM arm32v7/ubuntu:22.04
+FROM arm32v7/ubuntu:24.04
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV WORKGROUP ""
 
 RUN \
     apt-get update &&\
@@ -19,6 +20,7 @@ RUN \
         supervisor \
         openvpn \
         inetutils-ping \
+        ldb-tools \
         ntp &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
@@ -30,4 +32,4 @@ VOLUME [ "/var/lib/samba", "/etc/samba/external" ]
 ADD init.sh /init.sh
 ADD domain.sh /domain.sh
 RUN chmod 755 /init.sh /domain.sh
-CMD /init.sh setup
+CMD /init.sh
