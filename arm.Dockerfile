@@ -1,7 +1,6 @@
 FROM arm32v7/ubuntu:24.04
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV WORKGROUP ""
 
 RUN \
     apt-get update &&\
