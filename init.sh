@@ -130,11 +130,9 @@ appSetup () {
 	echo "driftfile       /var/lib/ntp/ntp.drift" >> /etc/ntpsec/ntp.conf
 	echo "logfile         /var/log/ntp" >> /etc/ntpsec/ntp.conf
 	echo "ntpsigndsocket  /var/lib/samba/ntp_signd/" >> /etc/ntpsec/ntp.conf
-	echo "restrict default kod nomodify notrap nopeer mssntp" >> /etc/ntpsec/ntp.conf
+	echo "restrict default kod limited nomodify mssntp" >> /etc/ntpsec/ntp.conf
 	echo "restrict 127.0.0.1" >> /etc/ntpsec/ntp.conf
-	echo "restrict 0.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpsec/ntp.conf
-	echo "restrict 1.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpsec/ntp.conf
-	echo "restrict 2.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery" >> /etc/ntpsec/ntp.conf
+	echo "restrict source           nomodify noquery" >> /etc/ntpsec/ntp.conf
 	echo "tinker panic 0" >> /etc/ntpsec/ntp.conf
 
 	appStart ${FIRSTRUN}
