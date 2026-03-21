@@ -11,14 +11,15 @@ Latest documentation available at: [https://nowsci.com/samba-domain/](https://no
 The workflow publishes images to `ghcr.io` when a git tag is pushed.
 
 - By default it uses `secrets.GITHUB_TOKEN` (with workflow `permissions.packages: write`).
-- For a fine-grained personal access token, add repository secrets:
+- For a personal access token, add repository secrets:
   - `GHCR_USERNAME` = your GitHub username
-  - `GHCR_TOKEN` = fine-grained PAT
+  - `GHCR_TOKEN` = fine-grained PAT or classic PAT
 
-Fine-grained PAT permissions for the target repository:
-- **Repository permissions**
-  - **Contents: Read**
-  - **Packages: Write**
+For a **fine-grained PAT**, package access is not a repository permission. Configure:
+- **Account permissions** → **Packages: Read and write**
+
+If you use a **classic PAT** instead, use scope:
+- `write:packages`
 
 ## Environment variables
 
