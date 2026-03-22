@@ -30,8 +30,8 @@ appSetup () {
 			echo "ERROR: WORKGROUP must not contain dots (got '${WORKGROUP}')."
 			exit 1
 		fi
-		if [[ ! "${URDOMAIN}" =~ ^[A-Z0-9]([A-Z0-9-]*[A-Z0-9])?$ ]]; then
-			echo "ERROR: WORKGROUP may contain only letters, numbers, and hyphens, and cannot start or end with a hyphen."
+		if [[ ! "${URDOMAIN}" =~ ^[A-Z0-9]([A-Z0-9_-]*[A-Z0-9])?$ ]]; then
+			echo "ERROR: WORKGROUP may contain only letters, numbers, hyphens, and underscores, and cannot start or end with a hyphen or underscore."
 			exit 1
 		fi
 	else
