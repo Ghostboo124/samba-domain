@@ -13,13 +13,11 @@ The workflow publishes images to `ghcr.io` when a git tag is pushed.
 - By default it uses `secrets.GITHUB_TOKEN` (with workflow `permissions.packages: write`).
 - For a personal access token, add repository secrets:
   - `GHCR_USERNAME` = your GitHub username
-  - `GHCR_TOKEN` = fine-grained PAT or classic PAT
+  - `GHCR_TOKEN` = fine-grained PAT
 
 For a **fine-grained PAT**, package access is not a repository permission. Configure:
 - **Account permissions** → **Packages: Read and write**
-
-If you use a **classic PAT** instead, use scope:
-- `write:packages`
+- **Repository access** → **Only select repositories** and choose this repository
 
 ## Environment variables
 
