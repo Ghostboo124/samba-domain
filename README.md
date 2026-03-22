@@ -18,3 +18,9 @@ Latest documentation available at: [https://nowsci.com/samba-domain/](https://no
 - `INSECURELDAP` defaults to false. When set to true, it removes the secure LDAP requirement. While this is not recommended for production it is required for some LDAP tools. You can remove it later from the smb.conf file stored in the config directory.
 - `MULTISITE` defaults to false and tells the container to connect to an OpenVPN site via an ovpn file with no password. For instance, if you have two locations where you run your domain controllers, they need to be able to interact. The VPN allows them to do that.
 - `NOCOMPLEXITY` defaults to false. When set to true it removes password complexity requirements including complexity, history-length, min-pwd-age, max-pwd-age
+
+## Container startup notes
+
+- The image entrypoint uses exec-form `CMD ["/init.sh"]`, so `init.sh` runs as PID 1.
+- `init.sh` starts `supervisord` in the background and then tails logs in the foreground. This is the current design and means graceful shutdown behavior is limited by that supervision model.
+- The historical `setup` argument in `CMD /init.sh setup` was unused by `init.sh`, so removing it does not change setup behavior.
