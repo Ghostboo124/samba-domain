@@ -6,19 +6,6 @@ A well documented, tried and tested Samba Active Directory Domain Controller tha
 
 Latest documentation available at: [https://nowsci.com/samba-domain/](https://nowsci.com/samba-domain/)
 
-## GitHub Container Registry publishing (tags)
-
-The workflow publishes images to `ghcr.io` when a git tag is pushed.
-
-- By default it uses `secrets.GITHUB_TOKEN` (with workflow `permissions.packages: write`).
-- For a personal access token, add repository secrets:
-  - `GHCR_USERNAME` = your GitHub username
-  - `GHCR_TOKEN` = fine-grained PAT
-
-For a **fine-grained PAT**, package access is not a repository permission. Configure:
-- **Account permissions** → **Packages: Read and write**
-- **Repository access** → **Only select repositories** and choose this repository
-
 ## Environment variables
 
 - `DOMAIN` sets the AD domain/realm.
